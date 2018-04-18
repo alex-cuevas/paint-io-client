@@ -80,7 +80,7 @@ setTimeout(() => {
 // TODO 2.1: Emit a login event (eg "LOGIN") to the server when the client is connected with the selected username.
 
 const login = (message = 'Who are you?') => {
-  user = prompt(message);
+  username = prompt(message);
   socket.emit('LOGIN', {username}, login)
 };
 
