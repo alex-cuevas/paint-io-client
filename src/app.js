@@ -76,8 +76,29 @@ setTimeout(() => {
   username = prompt('Enter your username');
   greet.write(`Hello, ${username}.`);
 });
+
 // TODO 2.1: Emit a login event (eg "LOGIN") to the server when the client is connected with the selected username.
+
+const login = (message = 'Who are you?') => {
+  user = prompt(message);
+  socket.emit('LOGIN', {username}, login)
+};
+
+socket.on('connect', () => {
+  login();
+  greet.write(`Hi, ${username}.`);
+});
+
 // TODO 2.2: Prevent users from using an existing username (multiple ways to do this, the most elegant would be using an "acknowledgement" when you dispatch the login event)
+const createUser = username => new Message({
+  text: username,
+  mountPoint: userPanel,
+});
+socket.on('UPDATE_USER_LIST', ({users}) => {
+  userPanel.clear();
+  Object.keys(users).map(createUser);
+});
+
 // TODO 2.3: Listen for an update user list event (eg "UPDATE_USER_LIST") from server, containing the "users" object with all usernames then update the dom to display this.
 
 // TODO 3.1 Update the user list display from step 2.3 so that it displays buttons, when clicked, draw events will only be dispatched to that user. You will also need to modify the onMove handler from 1.3
